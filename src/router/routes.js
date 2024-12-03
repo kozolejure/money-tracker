@@ -31,7 +31,7 @@ export default [
   {
     path: '/reports',
     exact: false,
-    label: 'Reports',
+    label: 'Reportssss',
     icon: 'line chart',
     component: Reports
   },
