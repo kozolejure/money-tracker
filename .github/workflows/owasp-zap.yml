@@ -17,11 +17,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run OWASP ZAP Scan
-        uses: zaproxy/action-baseline@v0.3.0
+        uses: zaproxy/action-baseline@v0.6.0
         with:
           target: 'https://money-tracker-8lcv.vercel.app/'
           format: 'html'
           cmd_options: '-a -r zap_report.html'
+          docker_name: 'ghcr.io/zaproxy/zaproxy'
+          docker_tag: 'latest'
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
