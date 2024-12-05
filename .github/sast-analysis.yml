@@ -1,0 +1,33 @@
+name: SAST Analysis with CodeQL
+
+on:
+  push: # Izvede analizo ob vsakem push
+    branches:
+      - '**' # Spremlja vse veje
+  pull_request:
+    branches:
+      - '**' # Analiza pri vsakem pull requestu na kateri koli veji
+  schedule:
+    - cron: '0 0 * * 0' # Tedensko izvajanje (vsako nedeljo ob 00:00)
+
+jobs:
+  codeql-analysis:
+    name: Perform SAST Analysis
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: 'javascript,python,java,csharp,go' # Prilagodite glede na uporabljene jezike
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
