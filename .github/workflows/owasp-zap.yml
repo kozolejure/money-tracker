@@ -1,0 +1,34 @@
+name: OWASP ZAP Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  zap-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Start OWASP ZAP
+        uses: docker://owasp/zap2docker-stable
+
+      - name: Run ZAP Scan
+        run: |
+          zap-cli start
+          zap-cli open-url https://money-tracker-8lcv.vercel.app/
+          zap-cli spider https://money-tracker-8lcv.vercel.app/
+          zap-cli active-scan https://money-tracker-8lcv.vercel.app/
+          zap-cli report -o zap_report.html -f html
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-security-report
+          path: zap_report.html
