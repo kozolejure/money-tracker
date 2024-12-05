@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Start OWASP ZAP
-        uses: docker://owasp/zap2docker-stable
+        uses: docker://owasp/zap2docker-live
 
       - name: Run ZAP Scan
         run: |
