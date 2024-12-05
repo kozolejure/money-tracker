@@ -16,16 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Start OWASP ZAP
-        uses: docker://owasp/zap2docker-live
-
-      - name: Run ZAP Scan
-        run: |
-          zap-cli start
-          zap-cli open-url https://money-tracker-8lcv.vercel.app/
-          zap-cli spider https://money-tracker-8lcv.vercel.app/
-          zap-cli active-scan https://money-tracker-8lcv.vercel.app/
-          zap-cli report -o zap_report.html -f html
+      - name: Run OWASP ZAP Scan
+        uses: zaproxy/action-baseline@v0.3.0
+        with:
+          target: 'https://money-tracker-8lcv.vercel.app/'
+          format: 'html'
+          cmd_options: '-a -r zap_report.html'
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
