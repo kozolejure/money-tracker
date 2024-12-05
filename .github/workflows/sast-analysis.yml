@@ -27,7 +27,7 @@ jobs:
       - name: Set up CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: 'javascript,python,java,csharp,go' # Prilagodite glede na uporabljene jezike
+          languages: 'javascript' # Prilagodite glede na uporabljene jezike
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
